@@ -20,7 +20,7 @@ const Global = React.forwardRef((props, ref) => {
   }); // drop down continent
   useEffect(() => {
     setDropdownElement(continentElement);
-  }, [activeGlobal]);// set default element when close dropdown
+  }, [activeGlobal]); // set default element when close dropdown
   const [dropdownElement, setDropdownElement] = useState(continentElement);
 
   function displayContinent() {
