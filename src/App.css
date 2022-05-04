@@ -1,0 +1,175 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+/* body {
+  font-family:  "Outfit", "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} */
+
+@font-face {
+  font-family: myFirstFont;
+  src: url("../font/SFPRODISPLAYMEDIUM.OTF");
+}
+:root {
+  --white: #ffffff;
+  --grey: rgba(255, 255, 255, 0.4);
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  font-size: 1.6rem;
+}
+
+h1 {
+  font-size: 6rem;
+}
+
+.wrapper {
+  content: "";
+  background: url("./assets/background.png") no-repeat center center/cover;
+  position: absolute;
+  /* width: 100%;
+  height: 100%; */
+  /* top: 0;
+  left: 0; */
+  z-index: -1;
+}
+.app .search {
+  text-align: center;
+  padding: 1rem;
+}
+
+.app input {
+  padding: 0.7rem 2.5rem;
+  font-size: 1.2rem;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #f8f8f8;
+}
+
+::placeholder {
+  color: #f8f8f8;
+}
+
+.container {
+  max-width: 700px;
+  height: 700px;
+  margin: auto;
+  padding: 0 1rem;
+  position: relative;
+  top: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.app .top {
+  width: 100%;
+  margin: 1rem auto;
+}
+
+.app .description {
+  position: relative;
+  right: -90%;
+  transform-origin: 0 0;
+  transform: rotate(269deg);
+}
+
+.app .bottom {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  width: 100%;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+h2 {
+  text-align: center;
+}
+.bold {
+  font-weight: 700;
+}
+.group-weather {
+  /* justify-content: center; */
+  flex-direction: column;
+}
+.weather {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.temp {
+  display: flex;
+  justify-content: space-between;
+}
+.weather-icon {
+  margin: auto;
+}
+.weather-place,
+.weather-temp-main,
+.weather-temp-max,
+.weather-temp-min {
+  color: var(--white);
+}
+.weather-description,
+.forecast-hourly,
+.forecast-weekly {
+  color: var(--grey);
+  font-size: 20px;
+}
+.weather-temp-main {
+  font-size: 94px;
+  line-height: 70px;
+}
+.weather-temp-max,
+.weather-temp-min {
+  font-size: 20px;
+}
+.forecast-item {
+  color: var(--white);
+  width: 60px;
+  background-color: #48319d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 30px;
+  gap: 16px 0;
+  justify-content: space-around;
+  padding: 16px 0;
+}
+.dropdown-menu {
+  box-shadow: 2px 2px 4px 2px rgba(255, 255, 255, 0.353);
+  animation: growOut 300ms ease-in-out forwards;
+  transform-origin: top left;
+}
+ul li:first-child {
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+}
+ul li:last-child {
+  border-bottom-left-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+}
+::-webkit-scrollbar-track {
+  background: red;
+}
+
+@keyframes growOut {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
