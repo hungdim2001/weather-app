@@ -1,17 +1,17 @@
 import React from "react";
-import { useEffect,useState } from "react";
+import { useEffect, useState } from "react";
 function Dropdown(props) {
-  const { statusDropdown, getWeather, getForeCast, setActiveDropdown } = props;
+  const { statusDropdown, getWeather, getForeCast, activeDropdown } = props;
   const listCity = ["Ho Chi Minh City", "Ha Noi", "Vinh", "Hue", "Da Nang"];
   const continent = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
   let [dropdown, setDropdown] = useState([]);
   function handleClick(e, city) {
     switch (statusDropdown) {
-      case "global":
+      case "Global":
         handleDisplayCountry(e, city);
         console.log("global");
         break;
-      case "local":
+      case "Local":
         getDataWeather(city);
         break;
       default:
@@ -38,8 +38,12 @@ function Dropdown(props) {
           );
         });
       })
+
       .then(() => {
         setDropdown(element);
+      })
+      .catch(function (err) {
+        console.log(err);
       });
   } // onclick call api display country of continent
   function getDataWeather(city) {
@@ -48,6 +52,7 @@ function Dropdown(props) {
     )
       .then((res) => res.json())
       .then((data) => {
+        if (data.cod === "404") return;
         getWeather([data]);
       })
       .catch((err) => console.log(err));
@@ -56,9 +61,11 @@ function Dropdown(props) {
     )
       .then((res) => res.json())
       .then((data) => {
+        if (data.cod === "404") return;
         getForeCast(data);
       })
       .catch((err) => console.log(err));
+    activeDropdown();
   } //call api get weather
   function displayDropdown(item) {
     return (
@@ -76,16 +83,12 @@ function Dropdown(props) {
     function setDropdownElement(statusDropdown) {
       let element;
       switch (statusDropdown) {
-        case "local":
-          console.log("local");
+        case "Local":
           element = listCity.map(displayDropdown);
-          console.log(element)
           setDropdown(element);
           break;
-        case "global":
-          console.log("global");
+        case "Global":
           element = continent.map(displayDropdown);
-          console.log(element)
           setDropdown(element);
           break;
         default:
@@ -95,7 +98,15 @@ function Dropdown(props) {
     }
     setDropdownElement(statusDropdown);
   }, [statusDropdown]);
-  return <div>{dropdown}</div>;
+  return (
+    <ul
+      style={{ display: statusDropdown ? "block" : "none" }}
+      className="absolute top-full z-10 w-40 rounded bg-white dropdown-menu 
+  max-h-96 overflow-auto  "
+    >
+      {dropdown}
+    </ul>
+  );
 }
 
 export default Dropdown;

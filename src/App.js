@@ -1,10 +1,8 @@
 import "./App.css";
 import React from "react";
 import Search from "./component/Search";
-import Local from "./component/Local";
 import Weather from "./component/Weather";
 import { useState, useEffect } from "react";
-import Global from "./component/Global";
 import Forecast from "./component/Forecast";
 import Dropdown from "./component/Dropdown";
 import { useRef } from "react";
@@ -13,8 +11,7 @@ function App() {
   let [foreCast, setForeCast] = useState(); // state store forecast and weather
   let localRef = useRef(null);
   let globalRef = useRef(null); // ref store Global Element and localElement
-  let [activeLocal, setActiveLocal] = useState(false);
-  let [activeGlobal, setActiveGlobal] = useState(false); // active dropdown
+
   let [statusDropdown, setStatusDropdown] = useState(null);
   useEffect(() => {
     fetch(
@@ -37,45 +34,21 @@ function App() {
 
   const getForeCast = (data) => {
     setForeCast(data);
-    console.log(data);
   }; //  set state forecast
   const getWeather = (data) => {
     setListWeather(data);
   }; // set state weather
-  function setActiveDropdown(data) {
-    setStatusDropdown(data);
-  }
-  function activeDropdown(data) {
-    switch (data) {
-      case "global":
-        setActiveGlobal(!activeGlobal);
-        setActiveLocal(false);
-        break;
-      case "local":
-        setActiveLocal(!activeLocal);
-        setActiveGlobal(false);
-        break;
-      default:
-        setActiveGlobal(false);
-        setActiveLocal(false);
-        break;
+
+  function activeDropdown() {
+    if (statusDropdown) {
+      setStatusDropdown(null);
     }
   } // close dropdown
   function handleClick(e) {
-    switch (statusDropdown) {
-      case "global":
-        setStatusDropdown(null);
-        console.log(e.target.innerText);
-        break;
-      case "local":
-        setStatusDropdown(null);
-        console.log(e.target.innerText);
-
-        break;
-      default:
-        setStatusDropdown(e.target.innerText);
-        console.log(e.target.innerText);
-        break;
+    if (statusDropdown) {
+      setStatusDropdown(null);
+    } else {
+      setStatusDropdown(e.target.innerText);
     }
   }
   useEffect(() => {
@@ -90,35 +63,54 @@ function App() {
       <div className="flex justify-center">
         <div className="mb-3 xl:w-96 wrapper">
           <div className="flex justify-between mb-3 px-4 items-center pt-4 ">
-            <div className="nav-bar">
-              <div className="local" onClick={handleClick}>
+            <div className="nav-bar flex justify-between mb-3  items-center pt-4">
+              <div
+                ref={localRef}
+                className="local  relative
+      text-white
+      hover:text-blue-600   
+      cursor-pointer"
+                onClick={handleClick}
+              >
                 {" "}
-                local
+                Local
+                <div
+                  style={{
+                    display: statusDropdown === "Local" ? "block" : "none",
+                  }}
+                >
+                  <Dropdown
+                    getWeather={getWeather}
+                    getForeCast={getForeCast}
+                    statusDropdown={statusDropdown}
+                    activeDropdown={handleClick}
+                  ></Dropdown>
+                </div>
               </div>
-              <div className="global" onClick={handleClick}>
-                global
+              <div
+                ref={globalRef}
+                className="global   relative
+                ml-2
+         text-white
+         hover:text-blue-600
+      cursor-pointer"
+                onClick={handleClick}
+              >
+                Global
+                <div
+                  style={{
+                    display: statusDropdown === "Global" ? "block" : "none",
+                  }}
+                >
+                  <Dropdown
+                    getWeather={getWeather}
+                    getForeCast={getForeCast}
+                    statusDropdown={statusDropdown}
+                    activeDropdown={handleClick}
+                  ></Dropdown>
+                </div>
               </div>
-              <Dropdown
-                getWeather={getWeather}
-                getForeCast={getForeCast}
-                statusDropdown={statusDropdown}
-                setActiveDropdown={setActiveDropdown}
-              ></Dropdown>
             </div>
-            {/* <Local
-              ref={localRef}
-              getWeather={getWeather}
-              activeDropdown={activeDropdown}
-              activeLocal={activeLocal}
-              getForeCast={getForeCast}
-            ></Local>
-            <Global
-              ref={globalRef}
-              getWeather={getWeather}
-              activeDropdown={activeDropdown}
-              activeGlobal={activeGlobal}
-              getForeCast={getForeCast}
-            /> */}
 
             <Search getWeather={getWeather} getForeCast={getForeCast}></Search>
           </div>
